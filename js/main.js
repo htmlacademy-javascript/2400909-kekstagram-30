@@ -27,7 +27,7 @@ const DESCRIPTION = [
 const NAMES = [ 'Женя', 'Саня', 'Рита', 'Леся', 'Дима', 'Оксана', 'Серега', ];
 
 
-//создаём функцию выбора сулчайного числа из диапазона
+//создаём функцию выбора сулчайного числа из диgit апазона
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -36,9 +36,7 @@ const getRandomInteger = (a, b) => {
 };
 
 //создаём функцию нахождения случайного индекса массива
-const getRandomArrayElement = (items) => {
-  items[getRandomInteger(0, items.length - 1)];
-};
+const getRandomArrayElement = (items) => items[getRandomInteger(0, items.length - 1)];
 
 //создаём функцию нахождения значения id
 const createIdGenerator = () => {
@@ -47,13 +45,13 @@ const createIdGenerator = () => {
   return () => {
     lastIdGenerator += 1;
     return lastIdGenerator;
-  }
+  };
 };
 
 //присваеваем переменной функцию создания случайног id
 const generateCommentId = createIdGenerator;
 
-//функция создания комментария
+//функция создания массива комментария
 const createMessage = () => Array.from(
   { length: getRandomInteger(1, 2) },
   () => getRandomArrayElement(COMMENT_LINE),
