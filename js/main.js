@@ -1,54 +1,6 @@
-//объявление постоянных
-const PICTURE_COUNT = 25;
-const AVATAR_COUNT = 6;
-const LIKES_MIN_COUNT = 15;
-const LIKES_MAX_COUNT = 200;
-const COMMENT_COUNT = 30;
-const COMMENT_LINE = [
-  'Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
-];
-const DESCRIPTION = [
-  'Вот это прикольно!',
-  'Лето закончилось)',
-  'Тестируем новую камеру',
-  'Моя семью. Люблю вас!',
-  'Проубю что-то новенькое',
-  'Как тебе, такое Илон Макс?',
-  'Куда идём мы с пяточком...',
-  'Всем привет!',
-  'Новые приключения...',
-  'А что ты сделал сегодня для завтра?'
-];
-const NAMES = [ 'Женя', 'Саня', 'Рита', 'Леся', 'Дима', 'Оксана', 'Серега', ];
+import {PICTURE_COUNT, AVATAR_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, COMMENT_COUNT, COMMENT_LINE, DESCRIPTION, NAMES} from './data.js';
+import {getRandomInteger, getRandomArrayElement, createIdGenerator} from './util.js';
 
-
-//создаём функцию выбора сулчайного числа из диапазона
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-//создаём функцию нахождения случайного индекса массива
-const getRandomArrayElement = (items) => {
-  items[getRandomInteger(0, items.length - 1)];
-};
-
-//создаём функцию нахождения значения id
-const createIdGenerator = () => {
-  let lastIdGenerator = 0;
-
-  return () => {
-    lastIdGenerator += 1;
-    return lastIdGenerator;
-  }
-};
 
 //присваеваем переменной функцию создания случайног id
 const generateCommentId = createIdGenerator;
