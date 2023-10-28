@@ -27,3 +27,5 @@ const DESCRIPTION = [
 const NAMES = [ 'Женя', 'Саня', 'Рита', 'Леся', 'Дима', 'Оксана', 'Серега', ];
 
 export {PICTURE_COUNT, AVATAR_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, COMMENT_COUNT, COMMENT_LINE, DESCRIPTION, NAMES};
+
+
