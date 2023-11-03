@@ -1,5 +1,6 @@
 import {PICTURE_COUNT, AVATAR_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, COMMENT_COUNT, COMMENT_LINE, DESCRIPTION, NAMES} from './data.js';
 import {getRandomInteger, getRandomArrayElement, createIdGenerator} from './util.js';
+import { renderThumbnails } from './thumbnails.js';
 
 
 //присваеваем переменной функцию создания случайног id
@@ -36,4 +37,5 @@ const getPictures = () => Array.from(
   (_, pictureIndex) => createPicture(pictureIndex + 1),
 );
 
-getPictures();
+const pictures = getPictures();
+renderThumbnails(pictures);
