@@ -1,6 +1,7 @@
 import { renderThumbnails } from './thumbnails.js';
 import { showPicture } from './picture.js';
 
+
 const container = document.querySelector('.pictures');
 
 //создаём функцию отрисовки большого фото по клику на миниатюру
