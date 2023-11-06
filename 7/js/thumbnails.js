@@ -1,3 +1,6 @@
+// eslint-disable-next-line quotes
+import { showPicture } from "./picture.js";
+
 const thumbnailTemplate = document
   .querySelector('#picture')
   .content
@@ -21,6 +24,12 @@ const renderThumbnails = (pictures, container) => {
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
     const thumbnail = createThumbnail(picture);
+
+    thumbnail.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      showPicture(picture);
+   });
+
     fragment.append(thumbnail);
   });
 
@@ -28,15 +37,3 @@ const renderThumbnails = (pictures, container) => {
 };
 
 export { renderThumbnails };
-
-/*
-На основе временных данных для разработки и шаблона #picture создайте DOM-элементы, соответствующие фотографиям, и заполните их данными:
-
-Адрес изображения url подставьте как атрибут src изображения.
-Описание изображения description подставьте в атрибут alt изображения.
-Количество лайков likes выведите в блок .picture__likes.
-Количество комментариев comments выведите в блок .picture__comments.
-Отрисуйте сгенерированные DOM-элементы в блок .pictures. Для вставки элементов используйте DocumentFragment.
-
-Подключите модуль в проект.
-*/
