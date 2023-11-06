@@ -7,9 +7,7 @@ const getRandomInteger = (a, b) => {
 };
 
 //создаём функцию нахождения случайного индекса массива
-const getRandomArrayElement = (items) => {
-  items[getRandomInteger(0, items.length - 1)];
-};
+const getRandomArrayElement = (items) => items[getRandomInteger(0, items.length - 1)];
 
 //создаём функцию нахождения значения id
 const createIdGenerator = () => {
@@ -18,7 +16,7 @@ const createIdGenerator = () => {
   return () => {
     lastIdGenerator += 1;
     return lastIdGenerator;
-  }
+  };
 };
 
 export {getRandomInteger, getRandomArrayElement, createIdGenerator};
