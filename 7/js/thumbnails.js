@@ -1,11 +1,9 @@
-// eslint-disable-next-line quotes
-import { showPicture } from "./picture.js";
+import { showPicture } from './picture.js';
 
 const thumbnailTemplate = document
   .querySelector('#picture')
   .content
   .querySelector('.picture');
-
 
 const createThumbnail = ({url, description, comments, likes, id}) => {
   const thumbnail = thumbnailTemplate.cloneNode(true);
@@ -30,10 +28,11 @@ const renderThumbnails = (pictures, container) => {
       showPicture(picture);
    });
 
-    fragment.append(thumbnail);
+   fragment.append(thumbnail);
   });
 
   container.append(fragment);
 };
 
 export { renderThumbnails };
+
