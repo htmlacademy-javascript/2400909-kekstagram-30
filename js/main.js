@@ -1,6 +1,6 @@
 import {PICTURE_COUNT, AVATAR_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, COMMENT_COUNT, COMMENT_LINE, DESCRIPTION, NAMES} from './data.js';
+import { renderPhoto } from './fullphoto.js';
 import {getRandomInteger, getRandomArrayElement, createIdGenerator} from './util.js';
-
 
 //присваеваем переменной функцию создания случайног id
 const generateCommentId = createIdGenerator;
@@ -36,4 +36,7 @@ const getPictures = () => Array.from(
   (_, pictureIndex) => createPicture(pictureIndex + 1),
 );
 
-getPictures();
+const pictures = getPictures();
+renderPhoto(pictures);
+
+export { createPicture };
