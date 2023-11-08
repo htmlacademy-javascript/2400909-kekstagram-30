@@ -22,17 +22,10 @@ const renderThumbnails = (pictures, container) => {
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
     const thumbnail = createThumbnail(picture);
-
-    thumbnail.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      showPicture(picture);
-   });
-
-   fragment.append(thumbnail);
+    fragment.append(thumbnail);
   });
 
   container.append(fragment);
 };
 
 export { renderThumbnails };
-
