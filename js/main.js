@@ -1,7 +1,7 @@
 import {PICTURE_COUNT, AVATAR_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, COMMENT_COUNT, COMMENT_LINE, DESCRIPTION, NAMES} from './data.js';
+import { renderPhoto } from './fullphoto.js';
 import {getRandomInteger, getRandomArrayElement, createIdGenerator} from './util.js';
 import {renderThumbnails} from './thumbnails.js';
-
 
 //присваеваем переменной функцию создания случайног id
 const generateCommentId = createIdGenerator;
@@ -20,7 +20,7 @@ const createComment = () => ({
   name: getRandomArrayElement(NAMES),
 });
 
-//функция создания объекта фото
+//функция создания массива объектов фото
 const createPicture = (index) => ({
   id: index,
   url: `photos/${index}.jpg`,
@@ -38,4 +38,7 @@ const getPictures = () => Array.from(
 );
 
 const pictures = getPictures();
-renderThumbnails(pictures);
+
+renderPhoto(pictures);
+
+export { createPicture };
