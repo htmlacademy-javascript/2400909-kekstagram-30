@@ -1,5 +1,3 @@
-import { showPicture } from './picture.js';
-
 const thumbnailTemplate = document
   .querySelector('#picture')
   .content
@@ -22,6 +20,7 @@ const renderThumbnails = (pictures, container) => {
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
     const thumbnail = createThumbnail(picture);
+
     fragment.append(thumbnail);
   });
 
