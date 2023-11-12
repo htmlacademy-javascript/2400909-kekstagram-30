@@ -17,9 +17,9 @@ const commentField = form.querySelector('.text__descrition');
 
 //добавляем функцию валидации
 const pristine = new Pristine(form, {
-  classTo: 'img-upload_field-wrapper',
-  errorTextParent: 'img-upload_field-wrapper',
-  errorTextClass: 'img-upload_field-wrapper__error',
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper__error',
 });
 
 //функция открытия окна
