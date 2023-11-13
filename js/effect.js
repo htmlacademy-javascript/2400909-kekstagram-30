@@ -102,7 +102,7 @@ const onSliderUpdate = () => {
   setImageStyle();
 };
 
-const createSlider = ({ min, max, step }) {
+const createSlider = ({ min, max, step }) => {
   noUiSlider.create(sliderElement, {
     range: { min, max },
     step,
@@ -134,8 +134,8 @@ const setSlider = () => {
   }
 };
 
-const setEffect = (effect) => {
-  chosenEffect = effect;
+const setEffect = (effects) => {
+  chosenEffect = effects;
   setSlider();
   setImageStyle();
 };

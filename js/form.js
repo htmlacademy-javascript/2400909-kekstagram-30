@@ -1,3 +1,4 @@
+import { resetScale } from './scale.js';
 import { init, reset } from './effect.js';
 
 const MAX_HASHTAG_COUNT = 5;
@@ -34,6 +35,8 @@ const showModal = () => {
 //функция закрытия окна
 const hideModal = () => {
   form.reset();
+  resetScale();
+  reset();
   pristine.reset();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -81,8 +84,10 @@ const onFileInputChange = () => {
 
 //функция добавления валидации комментариев
 const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+  const isValid = pristine.validate();
+  if (!isValid) {
+    evt.preventDefault();
+  }
 };
 
 //добавляем валидацию на хэш-теги
