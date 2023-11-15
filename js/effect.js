@@ -80,7 +80,7 @@ const isDefault = () => chosenEffect === effect.DEFAULT;
 
 const setImageStyle = () => {
   if (isDefault()) {
-    imageElement.style.filter = null;
+    imageElement.style.filter = '';
     return;
   }
 
