@@ -1,3 +1,6 @@
+import { resetScale } from './scale.js';
+import { init, reset } from './effect.js';
+
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 //добавляем объект для вывода сообщений об ошибках при валидации
@@ -13,7 +16,7 @@ const overlay = form.querySelector('.img-upload__overlay');
 const cancelButton = form.querySelector('.img-upload__cancel');
 const fileField = form.querySelector('.img-upload__input');
 const hashtagField = form.querySelector('.text__hashtags');
-const commentField = form.querySelector('.text__descrition');
+const commentField = form.querySelector('.text__description');
 
 //добавляем функцию валидации
 const pristine = new Pristine(form, {
@@ -32,6 +35,8 @@ const showModal = () => {
 //функция закрытия окна
 const hideModal = () => {
   form.reset();
+  resetScale();
+  reset();
   pristine.reset();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -79,8 +84,10 @@ const onFileInputChange = () => {
 
 //функция добавления валидации комментариев
 const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+  const isValid = pristine.validate();
+  if (!isValid) {
+    evt.preventDefault();
+  }
 };
 
 //добавляем валидацию на хэш-теги
@@ -111,3 +118,4 @@ pristine.addValidator(
 fileField.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
 form.addEventListener('submit', onFormSubmit);
+init();
