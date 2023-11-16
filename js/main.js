@@ -7,7 +7,7 @@ async function bootstrap() {
   try {
     const pictures = await loadPicture();
     renderPhoto(pictures);
-  } catch (error) {
+  } catch {
     showErrorMessage();
   }
 }

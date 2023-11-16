@@ -8,30 +8,6 @@ const effect = {
   HEAT: 'heat',
 };
 
-//объект фидьтра с эффектами
-const effectToFilter = {
-  [effect.CHROME]: {
-    style: 'grayscale',
-    unit: '',
-  },
-  [effect.SEPIA]: {
-    style: 'sepia',
-    unit: '',
-  },
-  [effect.MARVIN]: {
-    style: 'invert',
-    unit: '%',
-  },
-  [effect.PHOBOS]: {
-    style: 'blur',
-    unit: 'px',
-  },
-  [effect.HEAT]: {
-    style: 'brightness',
-    unit: '',
-  },
-};
-
 const effectToSliderOptions = {
   [effect.DEFAULT]: {
     min: 0,
@@ -39,26 +15,36 @@ const effectToSliderOptions = {
     step: 1,
   },
   [effect.CHROME]: {
+    style: 'grayscale',
+    unit: '',
     min: 0,
     max: 1,
     step: 0.1,
   },
   [effect.SEPIA]: {
+    style: 'sepia',
+    unit: '',
     min: 0,
     max: 1,
     step: 0.1,
   },
   [effect.MARVIN]: {
+    style: 'invert',
+    unit: '%',
     min: 0,
     max: 100,
     step: 1,
   },
   [effect.PHOBOS]: {
+    style: 'blur',
+    unit: 'px',
     min: 0,
     max: 3,
     step: 0.1,
   },
   [effect.HEAT]: {
+    style: 'brightness',
+    unit: '',
     min: 1,
     max: 3,
     step: 0.1,
@@ -85,7 +71,7 @@ const setImageStyle = () => {
   }
 
   const { value } = effectLevelElement;
-  const { style, unit, } = effectToFilter[chosenEffect];
+  const { style, unit, } = effectToSliderOptions[chosenEffect];
   imageElement.style.filter = `${style}(${value}${unit})`;
 };
 
