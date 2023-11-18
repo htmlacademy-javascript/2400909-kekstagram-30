@@ -1,6 +1,7 @@
 import { resetScale } from './scale.js';
 import { init, reset } from './effect.js';
 import { sendPicture } from './api.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -78,9 +79,14 @@ const hasUniqueTags = (value) => {
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
+//определяем есть или нет окно об ошибке
+function isErrorMessageExists() {
+  return Boolean(document.querySelector('.error'));
+}
+
 //функция обработчик
 function onDocumentKeyDown(evt) {
-  if (evt.key === 'Escape' && !isTextFieldFocused()) {
+  if (evt.key === 'Escape' && !isTextFieldFocused() && !isErrorMessageExists()) {
     evt.preventDefault();
     hideModal();
   }
@@ -97,13 +103,21 @@ const onFileInputChange = () => {
 };
 
 async function sendForm(formElement) {
-  if (pristine.validate()) {
+  if (! pristine.validate()) {
+    return;
+  }
+
+  try {
     toggleSubmitButton(true);
     await sendPicture(new FormData(formElement));
-    toggleSubmitButton(false);
     hideModal();
+    showSuccessMessage();
+  } catch {
+    showErrorMessage();
+    toggleSubmitButton(false);
   }
 }
+
 
 //функция добавления валидации комментариев
 const onFormSubmit = async (evt) => {
