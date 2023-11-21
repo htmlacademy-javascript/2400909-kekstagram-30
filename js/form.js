@@ -1,5 +1,7 @@
 import { resetScale } from './scale.js';
 import { init, reset } from './effect.js';
+import { sendPicture } from './api.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -10,6 +12,11 @@ const ErrorText = {
   INVALID_PATTERN: 'Неправельный хэштег',
 };
 
+const SubmitButtonCaption = {
+  SUBMITTING: 'ОТПРАВЛЯЮ...',
+  IDLE: 'ОПУБЛИКОВАТЬ',
+};
+
 const body = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
 const overlay = form.querySelector('.img-upload__overlay');
@@ -17,6 +24,14 @@ const cancelButton = form.querySelector('.img-upload__cancel');
 const fileField = form.querySelector('.img-upload__input');
 const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
+const submitButton = form.querySelector('.img-upload__submit');
+
+const toggleSubmitButton = (isDisabled) => {
+  submitButton.disabled = isDisabled;
+  submitButton.textContent = isDisabled
+    ? SubmitButtonCaption.SUBMITTING
+    : SubmitButtonCaption.IDLE;
+};
 
 //добавляем функцию валидации
 const pristine = new Pristine(form, {
@@ -64,9 +79,14 @@ const hasUniqueTags = (value) => {
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
+//определяем есть или нет окно об ошибке
+function isErrorMessageExists() {
+  return Boolean(document.querySelector('.error'));
+}
+
 //функция обработчик
 function onDocumentKeyDown(evt) {
-  if (evt.key === 'Escape' && !isTextFieldFocused()) {
+  if (evt.key === 'Escape' && !isTextFieldFocused() && !isErrorMessageExists()) {
     evt.preventDefault();
     hideModal();
   }
@@ -82,12 +102,27 @@ const onFileInputChange = () => {
   showModal();
 };
 
-//функция добавления валидации комментариев
-const onFormSubmit = (evt) => {
-  const isValid = pristine.validate();
-  if (!isValid) {
-    evt.preventDefault();
+async function sendForm(formElement) {
+  if (! pristine.validate()) {
+    return;
   }
+
+  try {
+    toggleSubmitButton(true);
+    await sendPicture(new FormData(formElement));
+    hideModal();
+    showSuccessMessage();
+  } catch {
+    showErrorMessage();
+    toggleSubmitButton(false);
+  }
+}
+
+
+//функция добавления валидации комментариев
+const onFormSubmit = async (evt) => {
+  evt.preventDefault();
+  sendForm(evt.target);
 };
 
 //добавляем валидацию на хэш-теги
