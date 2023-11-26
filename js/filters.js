@@ -1,4 +1,5 @@
 import { renderPhoto } from './fullphoto.js';
+import { debounce } from './util.js';
 
 const filterElement = document.querySelector('.img-filters');
 const filterForm = document.querySelector('.img-filters__form');
@@ -46,30 +47,40 @@ const filterHandles = {
   },
 };
 
+//переменная для отмены лишних перерисовок миниатюр при выборе фильтров
+let currentFilter = FilterEnum.DEFAULT;
+
 const repaint = (event, filter, data) => {
-  const filteredData = filterHandles[filter](data);
-  //удаление миниатюр перед отрисовкой новых по фильтрам
-  const picrutes = document.querySelectorAll('.picture');
-  picrutes.forEach((item) => item.remove());
-  //отрисовываем миниатюры
-  renderPhoto(filteredData);
-  //делаем активным фильтр
-  const currentActiveElement = filterForm.querySelector('.img-filters__button--active');
-  currentActiveElement.classList.remove('img-filters__button--active');
-  event.target.classList.add('img-filters__button--active');
+  //условие для проверки фильтра для отмены лишних перерисовок картинок
+  if (currentFilter !== filter) {
+    const filteredData = filterHandles[filter](data);
+    //удаление миниатюр перед отрисовкой новых по фильтрам
+    const picrutes = document.querySelectorAll('.picture');
+    picrutes.forEach((item) => item.remove());
+    //отрисовываем миниатюры
+    renderPhoto(filteredData);
+    //делаем активным фильтр
+    const currentActiveElement = filterForm.querySelector('.img-filters__button--active');
+    currentActiveElement.classList.remove('img-filters__button--active');
+    event.target.classList.add('img-filters__button--active');
+    currentFilter = filter;
+  }
 };
+
+//функция для пропуска откликов
+const debounceRepaint = debounce(repaint);
 
 //функция по удалению скрытого тега фильтров
 const initFilter = (data) => {
   filterElement.classList.remove('img-filters--inactive');
   defaultButton.addEventListener('click', (evt) => {
-    repaint(evt, FilterEnum.DEFAULT, data);
+    debounceRepaint(evt, FilterEnum.DEFAULT, data);
   });
   randomButton.addEventListener('click', (evt) => {
-    repaint(evt, FilterEnum.RANDOM, data);
+    debounceRepaint(evt, FilterEnum.RANDOM, data);
   });
   discussedButton.addEventListener('click', (evt) => {
-    repaint(evt, FilterEnum.DISCUSSED, data);
+    debounceRepaint(evt, FilterEnum.DISCUSSED, data);
   });
 };
 
