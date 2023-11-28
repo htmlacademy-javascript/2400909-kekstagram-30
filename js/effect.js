@@ -1,5 +1,5 @@
 //объект с эффектами
-const effect = {
+const Effect = {
   DEFAULT: 'none',
   CHROME: 'chrome',
   SEPIA: 'sepia',
@@ -8,41 +8,41 @@ const effect = {
   HEAT: 'heat',
 };
 
-const effectToSliderOptions = {
-  [effect.DEFAULT]: {
+const EffectToSliderOptions = {
+  [Effect.DEFAULT]: {
     min: 0,
     max: 100,
     step: 1,
   },
-  [effect.CHROME]: {
+  [Effect.CHROME]: {
     style: 'grayscale',
     unit: '',
     min: 0,
     max: 1,
     step: 0.1,
   },
-  [effect.SEPIA]: {
+  [Effect.SEPIA]: {
     style: 'sepia',
     unit: '',
     min: 0,
     max: 1,
     step: 0.1,
   },
-  [effect.MARVIN]: {
+  [Effect.MARVIN]: {
     style: 'invert',
     unit: '%',
     min: 0,
     max: 100,
     step: 1,
   },
-  [effect.PHOBOS]: {
+  [Effect.PHOBOS]: {
     style: 'blur',
     unit: 'px',
     min: 0,
     max: 3,
     step: 0.1,
   },
-  [effect.HEAT]: {
+  [Effect.HEAT]: {
     style: 'brightness',
     unit: '',
     min: 1,
@@ -60,9 +60,9 @@ const sliderContainerElement = modalElement.querySelector(
 );
 const effectLevelElement = modalElement.querySelector('.effect-level__value');
 
-let chosenEffect = effect.DEFAULT;
+let chosenEffect = Effect.DEFAULT;
 
-const isDefault = () => chosenEffect === effect.DEFAULT;
+const isDefault = () => chosenEffect === Effect.DEFAULT;
 
 const setImageStyle = () => {
   if (isDefault()) {
@@ -71,7 +71,7 @@ const setImageStyle = () => {
   }
 
   const { value } = effectLevelElement;
-  const { style, unit, } = effectToSliderOptions[chosenEffect];
+  const { style, unit, } = EffectToSliderOptions[chosenEffect];
   imageElement.style.filter = `${style}(${value}${unit})`;
 };
 
@@ -115,7 +115,7 @@ const setSlider = () => {
   if (isDefault()) {
     hideSlider();
   } else {
-    updateSlider(effectToSliderOptions[chosenEffect]);
+    updateSlider(EffectToSliderOptions[chosenEffect]);
     showSlider();
   }
 };
@@ -127,7 +127,7 @@ const setEffect = (effects) => {
 };
 
 const reset = () => {
-  setEffect(effect.DEFAULT);
+  setEffect(Effect.DEFAULT);
 };
 
 const onEffectChange = (evt) => {
@@ -135,7 +135,7 @@ const onEffectChange = (evt) => {
 };
 
 const init = () => {
-  createSlider(effectToSliderOptions[chosenEffect]);
+  createSlider(EffectToSliderOptions[chosenEffect]);
   effectsElement.addEventListener('change', onEffectChange);
 };
 

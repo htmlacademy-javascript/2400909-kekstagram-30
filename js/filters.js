@@ -1,14 +1,15 @@
 import { renderPhoto } from './fullphoto.js';
 import { debounce } from './util.js';
-
-const filterElement = document.querySelector('.img-filters');
-const filterForm = document.querySelector('.img-filters__form');
-const defaultButton = filterForm.querySelector('#filter-default');
-const randomButton = filterForm.querySelector('#filter-random');
-const discussedButton = filterForm.querySelector('#filter-discussed');
+import { getRandomIndex } from './util.js';
 
 //константа на кол-во случайных фото
 const MAX_RANDOM_FILTER = 10;
+
+const filterElement = document.querySelector('.img-filters');
+const filterFormElement = document.querySelector('.img-filters__form');
+const defaultButtonElement = filterFormElement.querySelector('#filter-default');
+const randomButtonElement = filterFormElement.querySelector('#filter-random');
+const discussedButtonElement = filterFormElement.querySelector('#filter-discussed');
 
 //объект с фильтрами
 const FilterEnum = {
@@ -17,16 +18,9 @@ const FilterEnum = {
   DISCUSSED: 'discussed'
 };
 
-//функция нахождения случайного числа в диапазоне
-const getRandomIndex = (min, max) => {
-  return Math.floor(Math.random() * (max - min));
-};
-
 //функция по ключам фильтров
 const filterHandles = {
-  [FilterEnum.DEFAULT]: (data) => {
-    return data;
-  },
+  [FilterEnum.DEFAULT]: (data) => data,
   [FilterEnum.RANDOM]: (data) => {
     const randomIndexList = [];
     const max = Math.min(MAX_RANDOM_FILTER, data.length);
@@ -37,14 +31,8 @@ const filterHandles = {
       }
     }
     return randomIndexList.map((index) => data[index]);
-
   },
-  [FilterEnum.DISCUSSED]: (data) => {
-    return [...data].sort((item1, item2) => {
-      return item2.comments.length - item1.comments.length;
-    });
-
-  },
+  [FilterEnum.DISCUSSED]: (data) => [...data].sort((item1, item2) => item2.comments.length - item1.comments.length),
 };
 
 //переменная для отмены лишних перерисовок миниатюр при выборе фильтров
@@ -60,7 +48,7 @@ const repaint = (event, filter, data) => {
     //отрисовываем миниатюры
     renderPhoto(filteredData);
     //делаем активным фильтр
-    const currentActiveElement = filterForm.querySelector('.img-filters__button--active');
+    const currentActiveElement = filterFormElement.querySelector('.img-filters__button--active');
     currentActiveElement.classList.remove('img-filters__button--active');
     event.target.classList.add('img-filters__button--active');
     currentFilter = filter;
@@ -73,13 +61,13 @@ const debounceRepaint = debounce(repaint);
 //функция по удалению скрытого тега фильтров
 const initFilter = (data) => {
   filterElement.classList.remove('img-filters--inactive');
-  defaultButton.addEventListener('click', (evt) => {
+  defaultButtonElement.addEventListener('click', (evt) => {
     debounceRepaint(evt, FilterEnum.DEFAULT, data);
   });
-  randomButton.addEventListener('click', (evt) => {
+  randomButtonElement.addEventListener('click', (evt) => {
     debounceRepaint(evt, FilterEnum.RANDOM, data);
   });
-  discussedButton.addEventListener('click', (evt) => {
+  discussedButtonElement.addEventListener('click', (evt) => {
     debounceRepaint(evt, FilterEnum.DISCUSSED, data);
   });
 };

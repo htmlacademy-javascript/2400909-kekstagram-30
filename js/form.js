@@ -136,13 +136,11 @@ async function sendForm(formElement) {
   }
 }
 
-
 //функция добавления валидации комментариев
 const onFormSubmit = async (evt) => {
   evt.preventDefault();
   sendForm(evt.target);
 };
-
 //добавляем валидацию на хэш-теги
 pristine.addValidator(
   hashtagField,
