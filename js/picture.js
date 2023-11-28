@@ -37,7 +37,6 @@ const renderComments = () => {
   } else {
     commentsLoaderElement.classList.remove('hidden');
   }
-
   //создаём фрагмент хранения новых комментариев
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < commentsCountShown; i++) {
