@@ -57,7 +57,7 @@ const onCommentsLoaderClick = () => renderComments();
 const hidePicture = () => {
   commentsCountShown = 0;
   bigPictureElement.classList.add('hidden');
-  bodyElement.classList.remove('.modal-open');
+  bodyElement.classList.remove('modal-open');
   //удадяем обработчик события на закрытие фото с клавиатуры
   document.removeEventListener('keydown', onDocumentKeyDown);
 };
@@ -88,7 +88,7 @@ const showPicture = (pictureData) => {
   //прописываем действия по показу большого фото
   bigPictureElement.classList.remove('hidden');
   //добавляем атрибут .modal-open для большого фото
-  bodyElement.classList.add('.modal-open');
+  bodyElement.classList.add('modal-open');
   //закрытие фото с клавиатуры
   document.addEventListener('keydown', onDocumentKeyDown);
 

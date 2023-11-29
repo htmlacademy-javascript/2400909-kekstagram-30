@@ -6,7 +6,7 @@ const successMessageElement = document
 const errorMessageElement = document
   .querySelector('#error')
   .content
-  .querySelector('error');
+  .querySelector('.error');
 
 function hideMessage() {
   const existsElement = document.querySelector('.success')
