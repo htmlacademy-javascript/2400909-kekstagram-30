@@ -49,10 +49,6 @@ const repaint = (evt, filter, data) => {
     picrutes.forEach((item) => item.remove());
     //отрисовываем миниатюры
     renderThumbnails(filteredData, container);
-    //делаем активным фильтр
-    //const currentActiveElement = filterFormElement.querySelector('.img-filters__button--active');
-    //currentActiveElement.classList.remove('img-filters__button--active');
-    //evt.target.classList.add('img-filters__button--active');
     currentFilter = filter;
   }
 };

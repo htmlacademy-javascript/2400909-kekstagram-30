@@ -1,11 +1,11 @@
 import { renderThumbnails } from './thumbnails.js';
 import { showPicture } from './picture.js';
 
-const container = document.querySelector('.pictures');
+const containerElement = document.querySelector('.pictures');
 
 //создаём функцию отрисовки большого фото по клику на миниатюру
 const renderPhoto = (pictures) => {
-  container.addEventListener('click', (evt) => {
+  containerElement.addEventListener('click', (evt) => {
     //добавляем атрибут к картинке
     const thumbnail = evt.target.closest ('[data-thumbnail-id]');
 
@@ -22,7 +22,7 @@ const renderPhoto = (pictures) => {
     showPicture(pictureData);
   });
   //вызваем функцию отрисовки миниатюр с передачей кратинок и контейреа
-  renderThumbnails(pictures, container);
+  renderThumbnails(pictures, containerElement);
 };
 
 export { renderPhoto };
