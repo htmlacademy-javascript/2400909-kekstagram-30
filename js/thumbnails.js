@@ -1,10 +1,10 @@
-const thumbnailTemplate = document
+const thumbnailTemplateElement = document
   .querySelector('#picture')
   .content
   .querySelector('.picture');
 
 const createThumbnail = ({url, description, comments, likes, id}) => {
-  const thumbnail = thumbnailTemplate.cloneNode(true);
+  const thumbnail = thumbnailTemplateElement.cloneNode(true);
 
   thumbnail.querySelector('.picture__img').src = url;
   thumbnail.querySelector('.picture__img').alt = description;

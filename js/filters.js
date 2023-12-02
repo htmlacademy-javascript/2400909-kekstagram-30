@@ -1,4 +1,4 @@
-import { renderPhoto } from './fullphoto.js';
+import { renderThumbnails } from './thumbnails.js';
 import { debounce } from './util.js';
 import { getRandomIndex } from './util.js';
 
@@ -10,6 +10,7 @@ const filterFormElement = document.querySelector('.img-filters__form');
 const defaultButtonElement = filterFormElement.querySelector('#filter-default');
 const randomButtonElement = filterFormElement.querySelector('#filter-random');
 const discussedButtonElement = filterFormElement.querySelector('#filter-discussed');
+
 
 //объект с фильтрами
 const FilterEnum = {
@@ -38,19 +39,16 @@ const filterHandles = {
 //переменная для отмены лишних перерисовок миниатюр при выборе фильтров
 let currentFilter = FilterEnum.DEFAULT;
 
-const repaint = (event, filter, data) => {
+const repaint = (evt, filter, data) => {
   //условие для проверки фильтра для отмены лишних перерисовок картинок
   if (currentFilter !== filter) {
+    const container = document.querySelector('.pictures');
     const filteredData = filterHandles[filter](data);
     //удаление миниатюр перед отрисовкой новых по фильтрам
     const picrutes = document.querySelectorAll('.picture');
     picrutes.forEach((item) => item.remove());
     //отрисовываем миниатюры
-    renderPhoto(filteredData);
-    //делаем активным фильтр
-    const currentActiveElement = filterFormElement.querySelector('.img-filters__button--active');
-    currentActiveElement.classList.remove('img-filters__button--active');
-    event.target.classList.add('img-filters__button--active');
+    renderThumbnails(filteredData, container);
     currentFilter = filter;
   }
 };
@@ -58,16 +56,27 @@ const repaint = (event, filter, data) => {
 //функция для пропуска откликов
 const debounceRepaint = debounce(repaint);
 
+const activateFilter = () => {
+  const currentActiveElement = filterFormElement.querySelector('.img-filters__button--active');
+  currentActiveElement.classList.remove('img-filters__button--active');
+} ;
+
 //функция по удалению скрытого тега фильтров
 const initFilter = (data) => {
   filterElement.classList.remove('img-filters--inactive');
   defaultButtonElement.addEventListener('click', (evt) => {
+    activateFilter();
+    evt.target.classList.add('img-filters__button--active');
     debounceRepaint(evt, FilterEnum.DEFAULT, data);
   });
   randomButtonElement.addEventListener('click', (evt) => {
+    activateFilter();
+    evt.target.classList.add('img-filters__button--active');
     debounceRepaint(evt, FilterEnum.RANDOM, data);
   });
   discussedButtonElement.addEventListener('click', (evt) => {
+    activateFilter();
+    evt.target.classList.add('img-filters__button--active');
     debounceRepaint(evt, FilterEnum.DISCUSSED, data);
   });
 };

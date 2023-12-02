@@ -19,26 +19,26 @@ const SubmitButtonCaption = {
   IDLE: 'ОПУБЛИКОВАТЬ',
 };
 
-const body = document.querySelector('body');
-const form = document.querySelector('.img-upload__form');
-const overlay = form.querySelector('.img-upload__overlay');
-const cancelButton = form.querySelector('.img-upload__cancel');
-const fileField = form.querySelector('.img-upload__input');
-const hashtagField = form.querySelector('.text__hashtags');
-const commentField = form.querySelector('.text__description');
-const submitButton = form.querySelector('.img-upload__submit');
-const photoPreview = form.querySelector('.img-upload__preview img');
-const effectsPreviews = form.querySelectorAll('.effects__preview');
+const bodyElement = document.querySelector('body');
+const formElement = document.querySelector('.img-upload__form');
+const overlayElement = formElement.querySelector('.img-upload__overlay');
+const cancelButtonElement = formElement.querySelector('.img-upload__cancel');
+const fileFieldElement = formElement.querySelector('.img-upload__input');
+const hashtagFieldElement = formElement.querySelector('.text__hashtags');
+const commentFieldElement = formElement.querySelector('.text__description');
+const submitButtonElement = formElement.querySelector('.img-upload__submit');
+const photoPreviewElement = formElement.querySelector('.img-upload__preview img');
+const effectsPreviewsElement = formElement.querySelectorAll('.effects__preview');
 
 const toggleSubmitButton = (isDisabled) => {
-  submitButton.disabled = isDisabled;
-  submitButton.textContent = isDisabled
+  submitButtonElement.disabled = isDisabled;
+  submitButtonElement.textContent = isDisabled
     ? SubmitButtonCaption.SUBMITTING
     : SubmitButtonCaption.IDLE;
 };
 
 //добавляем функцию валидации
-const pristine = new Pristine(form, {
+const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper__error',
@@ -46,26 +46,26 @@ const pristine = new Pristine(form, {
 
 //функция открытия окна
 const showModal = () => {
-  overlay.classList.remove('hidden');
-  body.classList.add('modal-open');
+  overlayElement.classList.remove('hidden');
+  bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeyDown);
 };
 
 //функция закрытия окна
 const hideModal = () => {
-  form.reset();
+  formElement.reset();
   resetScale();
   reset();
   pristine.reset();
-  overlay.classList.add('hidden');
-  body.classList.remove('modal-open');
+  overlayElement.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeyDown);
 };
 
 //функция фокусировки на тегах и комментариях
 const isTextFieldFocused = () =>
-  document.activeElement === hashtagField ||
-  document.activeElement === commentField;
+  document.activeElement === hashtagFieldElement ||
+  document.activeElement === commentFieldElement;
 
 //функция проверки расширения загруженного фото
 const isValidType = (file) => {
@@ -109,25 +109,25 @@ const onCancelButtonClick = () => {
 
 //функция добавления фото
 const onFileInputChange = () => {
-  const file = fileField.files[0];
+  const file = fileFieldElement.files[0];
 
   if (file && isValidType(file)) {
-    photoPreview.src = URL.createObjectURL(file);
-    effectsPreviews.forEach((preview) => {
-      preview.style.backgroundImage = `url('${photoPreview.src}')`;
+    photoPreviewElement.src = URL.createObjectURL(file);
+    effectsPreviewsElement.forEach((preview) => {
+      preview.style.backgroundImage = `url('${photoPreviewElement.src}')`;
     });
   }
   showModal();
 };
 
-async function sendForm(formElement) {
+async function sendForm(formEl) {
   if (! pristine.validate()) {
     return;
   }
 
   try {
     toggleSubmitButton(true);
-    await sendPicture(new FormData(formElement));
+    await sendPicture(new FormData(formEl));
     hideModal();
     showSuccessMessage();
   } catch {
@@ -143,7 +143,7 @@ const onFormSubmit = async (evt) => {
 };
 //добавляем валидацию на хэш-теги
 pristine.addValidator(
-  hashtagField,
+  hashtagFieldElement,
   hasValidCount,
   ErrorText.INVALID_COUNT,
   3,
@@ -151,7 +151,7 @@ pristine.addValidator(
 );
 //добавляем валидацию на хэш-теги
 pristine.addValidator(
-  hashtagField,
+  hashtagFieldElement,
   hasUniqueTags,
   ErrorText.NOT_UNIQUE,
   2,
@@ -159,14 +159,14 @@ pristine.addValidator(
 );
 //добавляем валидацию на хэш-теги
 pristine.addValidator(
-  hashtagField,
+  hashtagFieldElement,
   hasValidTags,
   ErrorText.INVALID_PATTERN,
   1,
   true
 );
 
-fileField.addEventListener('change', onFileInputChange);
-cancelButton.addEventListener('click', onCancelButtonClick);
-form.addEventListener('submit', onFormSubmit);
+fileFieldElement.addEventListener('change', onFileInputChange);
+cancelButtonElement.addEventListener('click', onCancelButtonClick);
+formElement.addEventListener('submit', onFormSubmit);
 init();
